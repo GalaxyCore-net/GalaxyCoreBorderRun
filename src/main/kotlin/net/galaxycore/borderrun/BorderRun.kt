@@ -1,13 +1,19 @@
 package net.galaxycore.borderrun
 
 import org.bukkit.plugin.java.JavaPlugin
+import java.util.logging.Logger
 
 class BorderRun : JavaPlugin() {
     override fun onEnable() {
-        logger.info("Hello")
+        log = logger
+        i("Hello")
     }
 
     override fun onDisable() {
-        logger.info("Bye")
+        i("Bye")
+    }
+
+    companion object {
+        lateinit var log: Logger
     }
 }
