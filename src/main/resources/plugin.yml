@@ -1,0 +1,7 @@
+name: BorderRun
+version: '${project.version}'
+main: net.galaxycore.borderrun.BorderRun
+api-version: 1.16
+authors: [ Flo_Mit_H_ ]
+description: A Border Run Plugin
+website: https://galaxycore.net/
