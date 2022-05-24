@@ -5,3 +5,9 @@ api-version: 1.16
 authors: [ Flo_Mit_H_ ]
 description: A Border Run Plugin
 website: https://galaxycore.net/
+prefix: BRun
+depend: [ GalaxyCoreCore ]
+
+commands:
+    start:
+        permission: brun.command.start
