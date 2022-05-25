@@ -5,7 +5,7 @@ import net.galaxycore.borderrun.utils.d
 
 class PreparePhase : Phase() {
     override fun onEnable() {
-        listenWith()
+        d("Prep Phase enabled")
     }
 
     override fun onDisable() {

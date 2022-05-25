@@ -10,4 +10,4 @@ depend: [ GalaxyCoreCore ]
 
 commands:
     start:
-        permission: brun.command.start
+        description: Start the Game

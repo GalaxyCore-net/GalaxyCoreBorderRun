@@ -11,6 +11,7 @@ class EndPhase : Phase() {
     }
 
     override fun onDisable() {
+        d("End Phase disabled")
         Bukkit.getServer().shutdown()
     }
 

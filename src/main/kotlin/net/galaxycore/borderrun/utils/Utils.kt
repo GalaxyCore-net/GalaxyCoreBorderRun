@@ -142,14 +142,12 @@ fun broadcast(i18nKey: String) {
     Bukkit.getOnlinePlayers().forEach {
         i18nKey.sI18N(it)
     }
-    Bukkit.getConsoleSender().sendMessage(I18N.getByLang("en_GB", "borderrun.$i18nKey"))
 }
 
 fun broadcast(i18nKey: String, replaceableProvider: (player: Player) -> HashMap<String, String>) {
     Bukkit.getOnlinePlayers().forEach {
         i18nKey.sI18N(it, replaceableProvider.invoke(it))
     }
-    Bukkit.getConsoleSender().sendMessage(I18N.getByLang("en_GB", "borderrun.$i18nKey"))
 }
 
 @JvmName("broadcastComp")
@@ -157,14 +155,12 @@ fun broadcast(i18nKey: String, replaceableProvider: (player: Player) -> HashMap<
     Bukkit.getOnlinePlayers().forEach {
         i18nKey.sI18N(it, replaceableProvider.invoke(it))
     }
-    Bukkit.getConsoleSender().sendMessage(I18N.getByLang("en_GB", "borderrun.$i18nKey"))
 }
 
 fun broadcast(i18nKey: String, replaceable: HashMap<String, String>) {
     Bukkit.getOnlinePlayers().forEach {
         i18nKey.sI18N(it, replaceable)
     }
-    Bukkit.getConsoleSender().sendMessage(I18N.getByLang("en_GB", "borderrun.$i18nKey"))
 }
 
 @JvmName("broadcastComp")
@@ -172,8 +168,6 @@ fun broadcast(i18nKey: String, replaceable: HashMap<String, Component>) {
     Bukkit.getOnlinePlayers().forEach {
         i18nKey.sI18N(it, replaceable)
     }
-
-    Bukkit.getConsoleSender().sendMessage(I18N.getByLang("en_GB", "borderrun.$i18nKey"))
 }
 
 fun JavaPlugin.forCommandToExecutor(cmd: String, executor: CommandExecutor) {

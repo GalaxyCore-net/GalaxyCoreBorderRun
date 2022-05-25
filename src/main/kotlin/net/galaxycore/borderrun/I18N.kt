@@ -12,6 +12,7 @@ fun registerI18NDE() {
 
     i18n("phase.lobby.counter", "§eDas Spiel start in $time", true)
     i18n("phase.lobby.counter.actionbar", "§e$time", false)
+    i18n("phase.lobby.joined", "§a%player% §ejoined (§a%players%§e/§a%needed_players%§e)", true)
 
     i18n("phase.prep.counter", "§eDu kannst in $time loslaufen", true)
     i18n("phase.prep.counter.actionbar", "§eBereite dich vor! | $time", false)
@@ -30,6 +31,7 @@ fun registerI18NEN() {
 
     i18n("phase.lobby.counter", "§eStarting in $time", true)
     i18n("phase.lobby.counter.actionbar", "§e$time", false)
+    i18n("phase.lobby.joined", "§a%player% §ehat den Server betreten (§a%players%§e/§a%needed_players%§e)", true)
 
     i18n("phase.prep.counter", "§eYou can start running in $time", true)
     i18n("phase.prep.counter.actionbar", "§ePrepare yourself! | $time", false)

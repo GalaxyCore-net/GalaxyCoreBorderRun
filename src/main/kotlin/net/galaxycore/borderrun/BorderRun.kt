@@ -14,6 +14,8 @@ import net.galaxycore.borderrun.runnables.firstSync
 import net.galaxycore.borderrun.utils.d
 import net.galaxycore.borderrun.utils.forCommandToExecutor
 import net.galaxycore.borderrun.utils.i
+import net.galaxycore.galaxycorecore.GalaxyCoreCore
+import net.galaxycore.galaxycorecore.configuration.ConfigNamespace
 import org.bukkit.Bukkit
 import org.bukkit.plugin.PluginManager
 import org.bukkit.plugin.java.JavaPlugin
@@ -29,10 +31,18 @@ class BorderRun : JavaPlugin() {
     internal lateinit var game: GamePhaseSystem
     internal lateinit var listenerPool: ListenerPool
     internal val kRunnableHolder by kRunnableHolderProperty
+    internal lateinit var configNamespace: ConfigNamespace
 
     override fun onEnable() {
         instance = this
         log = logger
+
+        val core = Bukkit.getServicesManager().load(GalaxyCoreCore::class.java)
+        i("Using Core: $core")
+
+        configNamespace = core?.databaseConfiguration?.getNamespace("borderrun")!!
+        configNamespace.setDefault("lobby.needed_players", "1")
+        configNamespace.setDefault("lobby.spawn", "orld@100.0;100.0;100.0;0.0;180.0")
 
         d("Launching BorderRun")
         registerI18NDE()
