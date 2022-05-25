@@ -2,7 +2,8 @@ package net.galaxycore.borderrun.phases
 
 import net.galaxycore.borderrun.PluginInstance
 import net.galaxycore.borderrun.components.LobbyJoinComponent
-import net.galaxycore.borderrun.components.NoDestroyLobbyComponent
+import net.galaxycore.borderrun.components.NoBlockModificationComponent
+import net.galaxycore.borderrun.components.NoHealthModificationComponent
 import net.galaxycore.borderrun.components.TeleportToSpawnComponent
 import net.galaxycore.borderrun.game.Phase
 import net.galaxycore.borderrun.utils.d
@@ -15,9 +16,10 @@ class LobbyPhase : Phase() {
 
     override fun onEnable() {
         listenWith(
-            NoDestroyLobbyComponent::class.java,
+            NoBlockModificationComponent::class.java,
             LobbyJoinComponent::class.java,
             TeleportToSpawnComponent::class.java,
+            NoHealthModificationComponent::class.java,
         )
 
         neededPlayers = try {

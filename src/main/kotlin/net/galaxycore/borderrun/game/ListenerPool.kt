@@ -11,10 +11,8 @@ class ListenerPool {
     private val listeners: MutableSet<Listener> = mutableSetOf()
     private val activeListeners: MutableSet<Class<out Listener>> = mutableSetOf()
 
-    private fun activate(listeners: Array<Class<out Listener>>) {
+    fun activate(listeners: Array<Class<out Listener>>) {
         val toCreate = listeners.filter { listener -> this.listeners.none { it.javaClass == listener.javaClass } }
-
-        d("Activating ${toCreate.size} listeners")
 
         toCreate.forEach {
             val listener: Listener = try {
@@ -28,7 +26,7 @@ class ListenerPool {
             this.listeners.add(listener)
             this.activeListeners.add(it)
             PluginManagerInst.registerEvents(listener, PluginInstance)
-            d("Activated new Listener ${it.simpleName}")
+            d("Activated Listener ${it.simpleName}")
         }
 
         val toActivate = this.listeners
@@ -38,13 +36,13 @@ class ListenerPool {
         toActivate.forEach {
             this.activeListeners.add(it.javaClass)
             PluginManagerInst.registerEvents(it, PluginInstance)
-            d("Reactivated new Listener ${it.javaClass.simpleName}")
+            d("Reactivated Listener ${it.javaClass.simpleName}")
         }
     }
 
     private fun deactivate(listeners: Array<Class<out Listener>>) {
         val toRemove = this.listeners.stream()
-            .filter { listener -> listeners.any { listener.javaClass == it.javaClass } }.toList()
+            .filter { listener -> listeners.any { listener.javaClass == it } }.toList()
 
         toRemove.forEach {
             HandlerList.unregisterAll(it)
@@ -56,8 +54,12 @@ class ListenerPool {
     fun push(listeners: Array<out Class<out Listener>>) {
         val toActivate = listeners.filter { listener -> this.activeListeners.none { it == listener } }
         val toDeactivate = this.listeners
-            .filter { listener -> listeners.none { it == listener::class.java } }
             .map { it::class.java }
+            .filter { listener -> listeners.none { it == listener } }
+
+        d("Activating ${toActivate.size} listeners")
+        d("Deactivating ${toDeactivate.size} listeners")
+        d("Listeners: ${listeners.map { it.simpleName }}")
 
         activate(toActivate.toTypedArray())
         deactivate(toDeactivate.toTypedArray())

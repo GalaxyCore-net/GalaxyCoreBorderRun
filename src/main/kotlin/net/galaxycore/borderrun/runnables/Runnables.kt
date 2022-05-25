@@ -30,7 +30,17 @@ abstract class KSpigotRunnable(
     var counterUp: Long? = null,
     var counterDownToOne: Long? = null,
     var counterDownToZero: Long? = null,
-) : BukkitRunnable()
+    var endCallback: (() -> Unit)? = null,
+) : BukkitRunnable() {
+    fun forceStop() {
+        cancel()
+    }
+
+    fun stopWithCallback() {
+        endCallback?.invoke()
+        cancel()
+    }
+}
 
 /**
  * Starts a new BukkitRunnable.
@@ -56,7 +66,7 @@ fun task(
     runnable: ((KSpigotRunnable) -> Unit)? = null,
 ): KSpigotRunnable? {
     if (howOften != null && howOften == 0L) return null
-    val bukkitRunnable = object : KSpigotRunnable() {
+    val bukkitRunnable = object : KSpigotRunnable(endCallback = endCallback) {
         private var curCounter = 0L
         override fun run() {
             var ranOut = false
