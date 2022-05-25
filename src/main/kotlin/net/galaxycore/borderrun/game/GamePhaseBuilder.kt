@@ -36,7 +36,7 @@ class GamePhaseBuilder(val length: Long) {
         this.keyActionBar = key
     }
 
-    fun createCounterMessageCallback(
+    private fun createCounterMessageCallback(
         hours: String = "h",
         minutes: String = "m",
         seconds: String = "s",

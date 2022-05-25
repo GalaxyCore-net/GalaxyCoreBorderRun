@@ -23,11 +23,11 @@ class LobbyJoinComponent : Listener {
         broadcast(
             "phase.lobby.joined",
             hashMapOf(
-                Pair("player", (event.player.displayName() as TextComponent).content()),
-                Pair("players", lobbyPhase.players.toString()),
-                Pair("needed_players", lobbyPhase.neededPlayers.toString()),
+                "player" to (event.player.displayName() as TextComponent).content(),
+                "players" to lobbyPhase.players.toString(),
+                "needed_players" to lobbyPhase.neededPlayers.toString(),
             )
-        )
+        ) // TODO: Stop GalaxyCoreCore from also sending this message
 
         if (lobbyPhase.players >= lobbyPhase.neededPlayers) game.begin()
     }
