@@ -1,6 +1,8 @@
 package net.galaxycore.borderrun.game
 
 import net.galaxycore.borderrun.PluginInstance
+import net.galaxycore.borderrun.phases.LobbyPhase
+import net.galaxycore.borderrun.utils.d
 import net.galaxycore.borderrun.utils.seconds
 
 fun getNewGame(): GamePhaseSystem {
@@ -8,6 +10,15 @@ fun getNewGame(): GamePhaseSystem {
         phase(30L.seconds) {
             counterMessageKey("phase.lobby.counter")
             counterActionBarMessageKey("phase.lobby.counter.actionbar")
+
+            start {
+                (PluginInstance.lobbyPhase as LobbyPhase).onCountdownStart()
+            }
+
+            cancel {
+                d("Cancelled")
+                (PluginInstance.lobbyPhase as LobbyPhase).onCountdownCancel()
+            }
 
             end {
                 PluginInstance.lobbyPhase.onDisable()

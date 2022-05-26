@@ -2,7 +2,6 @@ package net.galaxycore.borderrun.game
 
 import net.galaxycore.borderrun.PluginInstance
 import net.galaxycore.borderrun.PluginManagerInst
-import net.galaxycore.borderrun.utils.d
 import net.galaxycore.borderrun.utils.w
 import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
@@ -26,7 +25,6 @@ class ListenerPool {
             this.listeners.add(listener)
             this.activeListeners.add(it)
             PluginManagerInst.registerEvents(listener, PluginInstance)
-            d("Activated Listener ${it.simpleName}")
         }
 
         val toActivate = this.listeners
@@ -36,18 +34,16 @@ class ListenerPool {
         toActivate.forEach {
             this.activeListeners.add(it.javaClass)
             PluginManagerInst.registerEvents(it, PluginInstance)
-            d("Reactivated Listener ${it.javaClass.simpleName}")
         }
     }
 
-    private fun deactivate(listeners: Array<Class<out Listener>>) {
+    fun deactivate(listeners: Array<Class<out Listener>>) {
         val toRemove = this.listeners.stream()
             .filter { listener -> listeners.any { listener.javaClass == it } }.toList()
 
         toRemove.forEach {
             HandlerList.unregisterAll(it)
             this.activeListeners.remove(it::class.java)
-            d("Deactivated Listener ${it.javaClass.simpleName}")
         }
     }
 
@@ -56,10 +52,6 @@ class ListenerPool {
         val toDeactivate = this.listeners
             .map { it::class.java }
             .filter { listener -> listeners.none { it == listener } }
-
-        d("Activating ${toActivate.size} listeners")
-        d("Deactivating ${toDeactivate.size} listeners")
-        d("Listeners: ${listeners.map { it.simpleName }}")
 
         activate(toActivate.toTypedArray())
         deactivate(toDeactivate.toTypedArray())

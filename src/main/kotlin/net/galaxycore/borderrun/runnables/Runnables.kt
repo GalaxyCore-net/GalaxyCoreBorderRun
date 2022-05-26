@@ -63,10 +63,11 @@ fun task(
     howOften: Long? = null,
     safe: Boolean = false,
     endCallback: (() -> Unit)? = null,
+    cancelCallback: (() -> Unit)? = null,
     runnable: ((KSpigotRunnable) -> Unit)? = null,
 ): KSpigotRunnable? {
     if (howOften != null && howOften == 0L) return null
-    val bukkitRunnable = object : KSpigotRunnable(endCallback = endCallback) {
+    val bukkitRunnable = object : KSpigotRunnable(endCallback = cancelCallback) {
         private var curCounter = 0L
         override fun run() {
             var ranOut = false

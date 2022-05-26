@@ -1,5 +1,6 @@
 package net.galaxycore.borderrun.phases
 
+import net.galaxycore.borderrun.components.CancelGameIfTooLittlePlayersComponent
 import net.galaxycore.borderrun.components.NoHealthModificationComponent
 import net.galaxycore.borderrun.game.Phase
 import net.galaxycore.borderrun.utils.d
@@ -11,6 +12,8 @@ class EndPhase : Phase() {
         listenWith(
             NoHealthModificationComponent::class.java,
         )
+        CancelGameIfTooLittlePlayersComponent.currentMinPlayers = 0
+        CancelGameIfTooLittlePlayersComponent.shouldEnd = false
         d("End Phase enabled")
     }
 

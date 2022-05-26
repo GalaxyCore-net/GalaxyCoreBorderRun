@@ -1,5 +1,6 @@
 package net.galaxycore.borderrun
 
+import net.galaxycore.borderrun.cache.OnlinePlayerCache
 import net.galaxycore.borderrun.commands.StartCommand
 import net.galaxycore.borderrun.game.GamePhaseSystem
 import net.galaxycore.borderrun.game.ListenerPool
@@ -47,6 +48,9 @@ class BorderRun : JavaPlugin() {
         d("Launching BorderRun")
         registerI18NDE()
         registerI18NEN()
+
+        d("Starting Caching System")
+        PluginManagerInst.registerEvents(OnlinePlayerCache.instance, this)
 
         d("Introducing Game Phases")
         game = getNewGame()

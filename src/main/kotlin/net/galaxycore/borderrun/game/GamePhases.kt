@@ -64,6 +64,7 @@ class BaseGamePhase(
     val length: Long,
     val start: (() -> Unit)?,
     val end: (() -> Unit)?,
+    val cancel: (() -> Unit)?,
     val counterMessageKey: String?,
     val counterMessageActionBarKey: String?,
     val counterMessage: ((secondsLeft: Long) -> String),
@@ -76,7 +77,7 @@ class BaseGamePhase(
             end?.invoke()
 
             if (phaseQueue.isNotEmpty()) phaseQueue.removeAt(0).startIt(phaseQueue)
-        }) {
+        }, cancelCallback = cancel) {
             val currentCounter = it.counterDownToZero
             if (currentCounter?.isCounterValue == true && counterMessageKey != null && counterMessageKey != "") {
                 broadcast(
@@ -105,7 +106,7 @@ class BaseGamePhase(
     fun stopIt() {
         d("Stopping phase...")
         d("$runnable")
-        runnable?.forceStop()
+        runnable?.stopWithCallback()
     }
 
 }

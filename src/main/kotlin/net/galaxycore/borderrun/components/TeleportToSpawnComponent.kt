@@ -1,6 +1,7 @@
 package net.galaxycore.borderrun.components
 
 import net.galaxycore.borderrun.PluginInstance
+import net.galaxycore.borderrun.utils.w
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.event.EventHandler
@@ -12,7 +13,12 @@ class TeleportToSpawnComponent : Listener {
 
     init {
         val composed = PluginInstance.configNamespace["lobby.spawn"].split("@")
-        val world = Bukkit.getWorld(composed[0])!!
+        val world = try {
+            Bukkit.getWorld(composed[0])!!
+        } catch (exception: java.lang.NullPointerException) {
+            w("World ${composed[0]} not found! Using 'world' instead")
+            Bukkit.getWorld("world")
+        }
 
         val pos = composed[1].split(";")
         val x = pos[0].toDouble()
