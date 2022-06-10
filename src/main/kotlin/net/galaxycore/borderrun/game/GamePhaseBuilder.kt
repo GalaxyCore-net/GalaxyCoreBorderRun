@@ -10,7 +10,7 @@ class GamePhaseSystemBuilder {
     }
 }
 
-class GamePhaseBuilder(val length: Long) {
+class GamePhaseBuilder(private val length: Long) {
     private var start: (() -> Unit)? = null
     private var end: (() -> Unit)? = null
     private var cancel: (() -> Unit)? = null
@@ -42,11 +42,8 @@ class GamePhaseBuilder(val length: Long) {
     }
 
     private fun createCounterMessageCallback(
-        hours: String = "h",
-        minutes: String = "m",
-        seconds: String = "s",
     ) {
-        counterMessage = buildCounterMessageCallback(hours, minutes, seconds)
+        counterMessage = buildCounterMessageCallback()
     }
 
     fun build(): BaseGamePhase {

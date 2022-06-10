@@ -3,6 +3,7 @@ package net.galaxycore.borderrun.phases
 import com.okkero.skedule.SynchronizationContext
 import com.okkero.skedule.schedule
 import net.galaxycore.borderrun.PluginInstance
+import net.galaxycore.borderrun.cache.OnlinePlayerCache
 import net.galaxycore.borderrun.components.*
 import net.galaxycore.borderrun.game.Phase
 import net.galaxycore.borderrun.game.game
@@ -14,10 +15,9 @@ import org.bukkit.Bukkit
 
 class LobbyPhase : Phase() {
 
-    var players: Int = 0
     var neededPlayers: Int = 0
 
-    override fun onEnable() {
+    override fun enable() {
         listenWith(
             NoBlockModificationComponent::class.java,
             StartGameIfEnoughPlayersComponent::class.java,
@@ -39,9 +39,11 @@ class LobbyPhase : Phase() {
         CancelGameIfTooLittlePlayersComponent.shouldEnd = false
 
         startActionBar()
+
+        Bukkit.getOnlinePlayers().forEach { it.inventory.clear() }
     }
 
-    override fun onDisable() {
+    override fun disable() {
         d("Lobby Phase disabled")
     }
 
@@ -66,7 +68,7 @@ class LobbyPhase : Phase() {
                     it.sendActionBar(
                         "phase.lobby.actionbar".gI18N(
                             it, hashMapOf(
-                                "current" to Component.text(players),
+                                "current" to Component.text(OnlinePlayerCache.instance.onlinePlayers.size),
                                 "of" to Component.text(neededPlayers)
                             )
                         )

@@ -5,9 +5,9 @@ package net.galaxycore.borderrun.game
 import net.galaxycore.borderrun.runnables.KSpigotRunnable
 import net.galaxycore.borderrun.runnables.task
 import net.galaxycore.borderrun.utils.broadcast
+import net.galaxycore.borderrun.utils.buildTimer
 import net.galaxycore.borderrun.utils.d
 import net.galaxycore.borderrun.utils.gI18N
-import net.galaxycore.borderrun.utils.plusAssign
 import net.kyori.adventure.text.Component.text
 import org.bukkit.Bukkit
 import kotlin.math.floor
@@ -28,36 +28,20 @@ class GamePhaseSystem(vararg val baseGamePhases: BaseGamePhase) {
         currentPhase = null
         gamePhases = baseGamePhases.toMutableList()
     }
+
+    fun skip() {
+        currentPhase?.next()
+    }
+
+    fun skip(num: Int) {
+        for (i in 0 until num) {
+            skip()
+        }
+    }
 }
 
-fun buildCounterMessageCallback(
-    hour: String = "h",
-    minutes: String = "m",
-    seconds: String = "s",
-): (Long) -> String = { curSeconds ->
-    StringBuilder().apply {
-        val hourTime = (curSeconds / 3600)
-        val minuteTime = ((curSeconds % 3600) / 60)
-        val secondsTime = (curSeconds % 60)
-
-        if (hourTime > 0) {
-            this += hourTime
-            this += hour
-            this += " "
-        }
-
-        if (minuteTime > 0) {
-            this += minuteTime
-            this += minutes
-            this += " "
-        }
-
-        if (secondsTime > 0) {
-            this += secondsTime
-            this += seconds
-            this += " "
-        }
-    }.toString()
+fun buildCounterMessageCallback(): (Long) -> String = { curSeconds ->
+    buildTimer(curSeconds.toInt())
 }
 
 class BaseGamePhase(
@@ -107,6 +91,10 @@ class BaseGamePhase(
         d("Stopping phase...")
         d("$runnable")
         runnable?.stopWithCallback()
+    }
+
+    fun next() {
+        runnable?.stopWithEndCallback()
     }
 
 }

@@ -2,7 +2,9 @@ package net.galaxycore.borderrun.components
 
 import net.galaxycore.borderrun.PluginInstance
 import net.galaxycore.borderrun.utils.w
+import net.galaxycore.galaxycorecore.vanish.isVanished
 import org.bukkit.Bukkit
+import org.bukkit.GameMode
 import org.bukkit.Location
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -33,6 +35,11 @@ class TeleportToSpawnComponent : Listener {
     @EventHandler
     fun onJoin(event: PlayerJoinEvent) {
         event.player.teleport(location)
+        if (!event.player.isVanished) {
+            event.player.gameMode = GameMode.ADVENTURE
+            event.player.health = 20.0
+            event.player.foodLevel = 20
+        }
     }
 
 }

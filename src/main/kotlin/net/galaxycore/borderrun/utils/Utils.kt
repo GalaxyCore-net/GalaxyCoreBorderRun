@@ -9,6 +9,7 @@ import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.TextReplacementConfig
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandExecutor
+import org.bukkit.command.TabCompleter
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -170,9 +171,10 @@ fun broadcast(i18nKey: String, replaceable: HashMap<String, Component>) {
     }
 }
 
-fun JavaPlugin.forCommandToExecutor(cmd: String, executor: CommandExecutor) {
+fun JavaPlugin.forCommandToExecutor(cmd: String, executor: CommandExecutor, isAlsoTabCompleter: Boolean = false) {
     try {
         this.getCommand(cmd)!!.setExecutor(executor)
+        if (isAlsoTabCompleter) this.getCommand(cmd)!!.tabCompleter = executor as TabCompleter
     } catch (exception: NullPointerException) {
         w("The Command $cmd has to get registered in the plugin.yml!")
     }
@@ -180,4 +182,38 @@ fun JavaPlugin.forCommandToExecutor(cmd: String, executor: CommandExecutor) {
 
 operator fun <T> Array<T>.minus(other: List<Any>): Any {
     return this.subtract(other.toSet())
+}
+
+fun buildTimer(curSeconds: Int): String {
+    return StringBuilder().apply {
+        val hourTime = (curSeconds / 3600)
+        val minuteTime = ((curSeconds % 3600) / 60)
+        val secondsTime = (curSeconds % 60)
+
+        if (hourTime > 0) {
+            this += hourTime.toString()
+            this += "h"
+            this += " "
+        }
+
+        if (minuteTime > 0) {
+            this += minuteTime.toString()
+            this += "m"
+            this += " "
+        }
+
+        if (secondsTime > 0) {
+            this += secondsTime.toString()
+            this += "s"
+        }
+    }.toString()
+}
+
+fun clamp(toClamp: Number, minValue: Number, maxValue: Number): Number {
+    var ret: Number = toClamp
+    if (toClamp.toDouble() < minValue.toDouble())
+        ret = minValue
+    if (toClamp.toDouble() > maxValue.toDouble())
+        ret = maxValue
+    return ret
 }

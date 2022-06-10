@@ -8,16 +8,17 @@ import org.bukkit.Bukkit
 
 class EndPhase : Phase() {
 
-    override fun onEnable() {
+    override fun enable() {
         listenWith(
             NoHealthModificationComponent::class.java,
         )
         CancelGameIfTooLittlePlayersComponent.currentMinPlayers = 0
         CancelGameIfTooLittlePlayersComponent.shouldEnd = false
+        Bukkit.getOnlinePlayers().forEach { it.inventory.clear() }
         d("End Phase enabled")
     }
 
-    override fun onDisable() {
+    override fun disable() {
         d("End Phase disabled")
         Bukkit.getServer().shutdown()
     }

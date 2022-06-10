@@ -21,6 +21,7 @@ import org.bukkit.Bukkit
 import org.bukkit.plugin.PluginManager
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.logging.Logger
+import kotlin.properties.Delegates
 
 class BorderRun : JavaPlugin() {
 
@@ -33,6 +34,7 @@ class BorderRun : JavaPlugin() {
     internal lateinit var listenerPool: ListenerPool
     internal val kRunnableHolder by kRunnableHolderProperty
     internal lateinit var configNamespace: ConfigNamespace
+    internal var gamePhaseSize by Delegates.notNull<Int>()
 
     override fun onEnable() {
         instance = this
@@ -43,7 +45,18 @@ class BorderRun : JavaPlugin() {
 
         configNamespace = core?.databaseConfiguration?.getNamespace("borderrun")!!
         configNamespace.setDefault("lobby.needed_players", "1")
-        configNamespace.setDefault("lobby.spawn", "orld@100.0;100.0;100.0;0.0;180.0")
+        configNamespace.setDefault("lobby.spawn", "world@100.0;100.0;100.0;0.0;180.0")
+        configNamespace.setDefault("game.range", "7500")
+        configNamespace.setDefault("game.world_name", "world")
+        configNamespace.setDefault("game.border_size", "25")
+        configNamespace.setDefault("game.show_arrow", "true")
+        configNamespace.setDefault("game.arrow.clear_above", "10")
+        configNamespace.setDefault("game.arrow.material", "GOLD_BLOCK")
+        configNamespace.setDefault("game.border.size", "100000")
+        configNamespace.setDefault("game.border.damage", "20")
+        configNamespace.setDefault("game.border.initial_speed", "10")
+        configNamespace.setDefault("game.border.max_border_speed", "70")
+        configNamespace.setDefault("game.finish_line_size", "500")
 
         d("Launching BorderRun")
         registerI18NDE()
@@ -54,6 +67,7 @@ class BorderRun : JavaPlugin() {
 
         d("Introducing Game Phases")
         game = getNewGame()
+        gamePhaseSize = game.baseGamePhases.size
 
         d("Initializing Phases")
         listenerPool = ListenerPool()
