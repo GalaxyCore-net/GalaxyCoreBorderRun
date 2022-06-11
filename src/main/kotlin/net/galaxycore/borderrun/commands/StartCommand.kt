@@ -14,7 +14,7 @@ class StartCommand : CommandExecutor {
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
 
-        if (!sender.hasPermission("ctb.start")) {
+        if (!sender.hasPermission("brun.start")) {
             "nopermission".sI18N(sender as Player)
             return true
         }
