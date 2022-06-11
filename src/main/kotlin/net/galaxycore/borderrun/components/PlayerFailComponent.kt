@@ -23,7 +23,7 @@ class PlayerFailComponent : Listener {
         }
 
         val player = event.entity as Player
-        if (!player.isVanished) {
+        if (!player.isVanished && !gamePhase.finishedPlayers.containsKey(player)) {
             val dist: Int = abs(player.location.blockZ - prepPhase.randomSpawn.blockZ)
             gamePhase.diedPlayers[player] = dist to gamePhase.timer
 

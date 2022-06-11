@@ -29,7 +29,7 @@ class PlayerFinishComponent : Listener {
         val gamePhase: GamePhase = (PluginInstance.gamePhase as GamePhase)
         val prepPhase: PreparePhase = (PluginInstance.prepPhase as PreparePhase)
 
-        if (event.player.location.blockZ >= prepPhase.randomSpawn.blockZ + gamePhase.range && !event.player.isVanished && !gamePhase.finishedPlayers.containsKey(event.player)) {
+        if (event.player.location.blockZ >= prepPhase.randomSpawn.blockZ + gamePhase.range && !event.player.isVanished && !gamePhase.finishedPlayers.containsKey(event.player) && !gamePhase.diedPlayers.containsKey(event.player)) {
             gamePhase.finishedPlayers[event.player] = gamePhase.timer
 
             val bonus = floor(((1800 - gamePhase.timer) / gamePhase.finishedPlayers.size).toDouble() / 10)

@@ -6,6 +6,7 @@ import net.galaxycore.borderrun.PluginInstance
 import net.galaxycore.borderrun.components.CancelGameIfTooLittlePlayersComponent
 import net.galaxycore.borderrun.components.PlayerFailComponent
 import net.galaxycore.borderrun.components.PlayerFinishComponent
+import net.galaxycore.borderrun.components.ProhibitSpawnComponent
 import net.galaxycore.borderrun.game.Phase
 import net.galaxycore.borderrun.game.game
 import net.galaxycore.borderrun.runnables.task
@@ -78,6 +79,7 @@ class GamePhase : Phase() {
         listenWith(
             PlayerFailComponent::class.java,
             PlayerFinishComponent::class.java,
+            ProhibitSpawnComponent::class.java,
         )
         CancelGameIfTooLittlePlayersComponent.currentMinPlayers = (PluginInstance.lobbyPhase as LobbyPhase).neededPlayers
         startWorldBorder()

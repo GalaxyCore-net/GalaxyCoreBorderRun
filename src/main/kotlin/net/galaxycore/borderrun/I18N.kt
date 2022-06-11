@@ -35,6 +35,8 @@ fun registerI18NDE() {
 
     i18n("command.start.success", "§e✓§7 Das Spiel wurde gestartet!", true)
     i18n("command.start.failure", "§c✗§7 Das Spiel ist bereits gestartet!", true)
+
+    i18n("game.running", "§c✗§7 Das Spiel ist bereits gestartet!", true)
 }
 
 fun registerI18NEN() {
@@ -67,4 +69,6 @@ fun registerI18NEN() {
 
     i18n("command.start.success", "§e✓§7 Started the game!", true)
     i18n("command.start.failure", "§c✗§7 The game is already started!", true)
+
+    i18n("game.running", "§c✗§7 The game is already started!", true)
 }
